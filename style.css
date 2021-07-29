@@ -1,0 +1,70 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+h1 {
+  text-align: center;
+}
+.box {
+  padding: 10px;
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  font-size: 0.7em;
+  /* border-radius: 25px; */
+  /* margin: 10px auto; */
+}
+.box > div {
+  border: 1px solid #ddd;
+  padding: 10px;
+  overflow: hidden;
+}
+.box img {
+  width: 100%;
+}
+.box:hover {
+  cursor: pointer;
+}
+/* .btn {
+  padding: 10px;
+  font-size: 1em;
+  margin: 5px;
+  border-radius: 15px;
+} */
+.btn {
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  text-transform: capitalize;
+}
+.btn:hover {
+  opacity: 0.7;
+}
+.cBtn {
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  text-transform: capitalize;
+}
+input,
+.btn {
+  font-size: 1.5em;
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+.output {
+  padding: 20px;
+  margin: auto;
+  width: 70%;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+}
