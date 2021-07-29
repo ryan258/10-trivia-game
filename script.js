@@ -13,6 +13,7 @@ const game = {
 
 //! Load Start Screen w/ question amount input
 window.addEventListener('DOMContentLoaded', (e) => {
+  // testInsert()
   btn.textContent = 'Start Game'
   inputVal.setAttribute('type', 'number')
   inputVal.defaultValue = 3
@@ -50,7 +51,10 @@ function outputPage() {
   console.log(question)
   // Build an array of answers
   let answers = question.incorrect_answers
-  answers.push(question.correct_answer)
+  // Randomize where the correct answer is placed
+  let randomAnswerIndex = Math.floor(Math.random() * (answers.length + 1))
+  answers.splice(randomAnswerIndex, 0, question.correct_answer)
+
   // console.log(answers)
   const mainDiv = generateElement(output, 'div')
   const q1 = generateElement(mainDiv, 'div', question.question)
@@ -85,4 +89,17 @@ function generateElement(parent, eleType, html = '') {
   temp.innerHTML = html
   parent.append(temp)
   return temp
+}
+
+//! //////////////////////////////////////////////////////////////////
+//! Test functions
+
+//! Make sure that we are inserting content properly in the tempArray
+function testInsert() {
+  for (let i = 0; i < 500; i++) {
+    let tempArr = [0, 0, 0]
+    let randomIndex = Math.floor(Math.random() * (tempArr.length + 1))
+    tempArr.splice(randomIndex, 0, 1)
+    output.innerHTML += JSON.stringify(tempArr) + ': ' + randomIndex + '<br>'
+  }
 }
