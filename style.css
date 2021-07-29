@@ -33,6 +33,9 @@ h1 {
   margin: 5px;
   border-radius: 15px;
 } */
+button {
+  padding: 10px 20px;
+}
 .btn {
   padding: 8px;
   margin: 5px;

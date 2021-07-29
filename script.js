@@ -8,7 +8,8 @@ const baseURL = `https://opentdb.com/api.php?`
 //! The global game obj
 const game = {
   questions: [],
-  question: 0
+  question: 0,
+  elements: []
 }
 
 //! Load Start Screen w/ question amount input
@@ -55,19 +56,41 @@ function outputPage() {
   let randomAnswerIndex = Math.floor(Math.random() * (answers.length + 1))
   answers.splice(randomAnswerIndex, 0, question.correct_answer)
 
-  // console.log(answers)
+  console.log(answers)
   const mainDiv = generateElement(output, 'div')
   const q1 = generateElement(mainDiv, 'div', question.question)
+
+  game.elements.length = 0 // empties out the game.elements array
+
   const answersDiv = generateElement(output, 'div')
   answers.forEach((answer) => {
     const answer1 = generateElement(answersDiv, 'button', answer)
+    game.elements.push(answer1)
+    if (answer == question.correct_answer) {
+      answer1.bgColor = 'green'
+    } else {
+      answer1.bgColor = 'red'
+    }
     answer1.addEventListener('click', (e) => {
+      game.elements.forEach((btn) => {
+        btn.disabled = true
+        btn.style.backgroundColor = btn.bgColor
+        btn.style.color = 'white'
+        // btn.style.borderColor = 'white'
+      })
+
+      const message = generateElement(answersDiv, 'div', 'You got it wrong, dummy!<br>')
+
       if (answer === question.correct_answer) {
-        alert('You are right!')
+        console.log('Correct answer!')
+        message.innerHTML = 'You got it right!<br>'
+        answer1.style.backgroundColor = 'green'
       } else {
-        alert('Wrong...')
+        console.log('Wrong...')
+        answer1.style.backgroundColor = 'red'
       }
       nextQuestion(answersDiv)
+      console.log(game)
     })
   })
   // game.questions.forEach((item) => {
