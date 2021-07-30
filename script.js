@@ -44,58 +44,65 @@ function popPage(url) {
 
 //! Iterate through content and output it to page
 function outputPage() {
-  output.innerHTML = ''
-  // console.log(game.questions)
-  // console.log(game.questions[game.question])
-  let question = game.questions[game.question]
-  game.question++ // move to next question
-  console.log(question)
-  // Build an array of answers
-  let answers = question.incorrect_answers
-  // Randomize where the correct answer is placed
-  let randomAnswerIndex = Math.floor(Math.random() * (answers.length + 1))
-  answers.splice(randomAnswerIndex, 0, question.correct_answer)
+  if (game.question >= game.questions.length) {
+    output.innerHTML = 'game over 👻 play again'
+    btn.style.display = 'block'
+    inputVal.style.display = 'block'
+    game.question = 0
+  } else {
+    output.innerHTML = ''
+    // console.log(game.questions)
+    // console.log(game.questions[game.question])
+    let question = game.questions[game.question]
+    game.question++ // move to next question
+    console.log(question)
+    // Build an array of answers
+    let answers = question.incorrect_answers
+    // Randomize where the correct answer is placed
+    let randomAnswerIndex = Math.floor(Math.random() * (answers.length + 1))
+    answers.splice(randomAnswerIndex, 0, question.correct_answer)
 
-  console.log(answers)
-  const mainDiv = generateElement(output, 'div')
-  const q1 = generateElement(mainDiv, 'div', question.question)
+    console.log(answers)
+    const mainDiv = generateElement(output, 'div')
+    const q1 = generateElement(mainDiv, 'div', question.question)
 
-  game.elements.length = 0 // empties out the game.elements array
+    game.elements.length = 0 // empties out the game.elements array
 
-  const answersDiv = generateElement(output, 'div')
-  answers.forEach((answer) => {
-    const answer1 = generateElement(answersDiv, 'button', answer)
-    game.elements.push(answer1)
-    if (answer == question.correct_answer) {
-      answer1.bgColor = 'green'
-    } else {
-      answer1.bgColor = 'red'
-    }
-    answer1.addEventListener('click', (e) => {
-      game.elements.forEach((btn) => {
-        btn.disabled = true
-        btn.style.backgroundColor = btn.bgColor
-        btn.style.color = 'white'
-        // btn.style.borderColor = 'white'
-      })
-
-      const message = generateElement(answersDiv, 'div', 'You got it wrong, dummy!<br>')
-
-      if (answer === question.correct_answer) {
-        console.log('Correct answer!')
-        message.innerHTML = 'You got it right!<br>'
-        answer1.style.backgroundColor = 'green'
+    const answersDiv = generateElement(output, 'div')
+    answers.forEach((answer) => {
+      const answer1 = generateElement(answersDiv, 'button', answer)
+      game.elements.push(answer1)
+      if (answer == question.correct_answer) {
+        answer1.bgColor = 'green'
       } else {
-        console.log('Wrong...')
-        answer1.style.backgroundColor = 'red'
+        answer1.bgColor = 'red'
       }
-      nextQuestion(answersDiv)
-      console.log(game)
+      answer1.addEventListener('click', (e) => {
+        game.elements.forEach((btn) => {
+          btn.disabled = true
+          btn.style.backgroundColor = btn.bgColor
+          btn.style.color = 'white'
+          // btn.style.borderColor = 'white'
+        })
+
+        const message = generateElement(answersDiv, 'div', 'You got it wrong, dummy!<br>')
+
+        if (answer === question.correct_answer) {
+          console.log('Correct answer!')
+          message.innerHTML = 'You got it right!<br>'
+          answer1.style.backgroundColor = 'green'
+        } else {
+          console.log('Wrong...')
+          answer1.style.backgroundColor = 'red'
+        }
+        nextQuestion(answersDiv)
+        console.log(game)
+      })
     })
-  })
-  // game.questions.forEach((item) => {
-  //   console.log(item)
-  // })
+    // game.questions.forEach((item) => {
+    //   console.log(item)
+    // })
+  }
 }
 
 //! Generate next question button w/ click handler to next question
