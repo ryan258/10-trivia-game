@@ -1,7 +1,13 @@
 const btn = document.querySelector('.btn')
 const h1 = document.querySelector('h1')
 const output = document.querySelector('.output')
+const output1 = generateElement(document.body, 'div', 'Please Make Your Selection<br># of Questions')
 const inputVal = document.querySelector('.val')
+output1.append(inputVal)
+const select1 = generateElement(output1, 'select')
+const select2 = generateElement(output1, 'select')
+
+output1.append(btn)
 
 const baseURL = `https://opentdb.com/api.php?`
 
@@ -12,13 +18,44 @@ const game = {
   elements: []
 }
 
+const difficulties = ['easy', 'medium', 'hard']
+
+const categories = [
+  {
+    title: 'Computer Science',
+    num: 18
+  },
+  {
+    title: 'General Knowledge',
+    num: 9
+  },
+  {
+    title: 'Gadgets',
+    num: 30
+  }
+]
+
 //! Load Start Screen w/ question amount input
 window.addEventListener('DOMContentLoaded', (e) => {
+  generateSelections()
   // testInsert()
   btn.textContent = 'Start Game'
   inputVal.setAttribute('type', 'number')
   inputVal.defaultValue = 3
 })
+
+function generateSelections() {
+  categories.forEach((category) => {
+    console.log(category)
+    const optionElement = generateElement(select1, 'option', category.title)
+    optionElement.value = category.num
+  })
+  difficulties.forEach((difficulty) => {
+    console.log(difficulty)
+    const optionElement = generateElement(select2, 'option', difficulty.toUpperCase())
+    optionElement.value = difficulty
+  })
+}
 
 //! Here we generate the page content of the Trivia Game
 btn.addEventListener('click', (e) => {
@@ -28,7 +65,7 @@ btn.addEventListener('click', (e) => {
   // Display game content
   h1.textContent = inputVal.value + ' question(s) selected'
   // Construct fetch url and call for questions
-  let tempURL = baseURL + 'amount=' + inputVal.value
+  let tempURL = `${baseURL}amount=${inputVal.value}&category=${select1.value}&difficulty=${select2.value}`
   popPage(tempURL)
 })
 
